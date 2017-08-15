@@ -30,5 +30,6 @@ Commit snapshot version update (Git)
 * Deploy new version
 
 ## Update documentation
-* Update download links to point to latest release in github releases: https://wiki.duraspace.org/display/DURACLOUD/DuraCloud+Downloads
+* Add release notes to github release: https://github.com/duracloud/duracloud/releases
+* Update download links to point to latest release in github: https://wiki.duraspace.org/display/DURACLOUD/DuraCloud+Downloads
 * Update documentation based on changes in code: https://wiki.duraspace.org/display/DURACLOUD
