@@ -1,15 +1,17 @@
 # Things this file should cover
 
-0. Setting up keypairs
-0. Setup IAM Roles / Users
-0. Setup EFS
-0. Setup VPC
-0. Setup Security Groups
-0. Database setup
-0. CloudFront Signing Key
-0. SES
-0. SNS Topic
-0. SQS (hopefully Mill deploy tool will cover this setup)
-0. AWS CloudWatch Metrics (hopefully will be covered by mill deploy tool)
+1. Setting up keypairs
+1. Setup IAM Roles / Users
+1. Setup EFS
+1. Setup VPC
+1. Setup Security Groups
+1. Database setup
+1. CloudFront Signing Key
+1. SES
+1. SNS Topic
+1. SQS (hopefully Mill deploy tool will cover this setup)
+1. AWS CloudWatch Metrics (hopefully will be covered by mill deploy tool)
+1. DuraCloud config directory and configuration files.
+1. Setup the monitor
 
 
