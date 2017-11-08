@@ -19,7 +19,7 @@ The following documents capture the steps required to build, release, and deploy
 * [Mill updates]() - Describes how to update the DuraCloud Mill software and configuration
 
 ### Account Management
-* [Creating new accounts]() - Describes how a new client DuraCloud account is added to the system
+* [Creating new accounts](creating-new-accounts.md) - Describes how a new client DuraCloud account is added to the system
 
 ### Architecture
 * [DuraCloud Architecture]() - Describes the overall DuraCloud architecture

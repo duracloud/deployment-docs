@@ -1,6 +1,13 @@
 # DuraCloud Release Steps
 
+## Preparing for release
+
+* Assign a Release Manager, the person who will be responsible for the release process. The Release Manager must be a DuraCloud committer.
+* Ensure all code commits have been pushed and merged
+* Issue a code freeze statement ensuring all developers know not to push further changes
+
 ## Perform version update
+
 Set release version
 * `mvn versions:set -DnewVersion=X.X.X`
 * `mvn versions:commit`
