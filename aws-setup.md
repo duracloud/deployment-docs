@@ -202,11 +202,20 @@ used by the management-console to notify topic subscribers of changes to the acc
 
 ### Set up your github key for accessing private repos
 The cloud init scripts that provision the mill instances  depend on cloning 
-the https://github.com/duraspace/puppet-duracloud-mill.git repository. This repository, however is currently private.
-Until it becomes public,  we will need to grant you access to the repo.  Additionally you'll need to create a github ssh
+the https://github.com/duraspace/puppet-duracloud-mill.git repository. This repository is private, so we will need to grant you access to the repo.  Additionally you'll need to create a github ssh
 keypair and drop the private key in the bucket you created in the last step.
 
+### Create CloudFront Signing Key
 
-###. Create CloudFront Signing Key and drop it in the config bucket
-Bill can you take me through this processes? 
+A CloudFront Signing Key is used by DuraCloud to digitally sign requests for streaming content. These signatures are required to support spaces for which secure streaming is enabled. An authenticated request for access to a secure stream via the DuraCloud API results in a signed RTMP streaming URL. This URL can then be used to stream the media file within the constraints defined by the original request.
 
+1. Log in to the AWS console and navigate to the [IAM Security Credentials page](https://console.aws.amazon.com/iam/home?#/security_credential)
+2. Open the CloudFront key pairs section 
+3. Create a new key pair, making sure to capture the **private key**, and **Access Key ID**
+4. Ensure that the new key pair is active
+5. Reformat the private key for use in Java (from PEM to DER format)
+   `openssl pkcs8 -topk8 -nocrypt -in origin.pem -inform PEM -out new.der -outform DER`
+6. Add the new DER formatted file to the production-config S3 bucket created above and capture the path of the file in S3, it will be something like:
+   `s3://<domain>-production-config/production-cloudfront-signing-key.dir`
+7. In the AWS console, navigate to [Account Settings](https://console.aws.amazon.com/billing/home?#/account) and capture the Account ID
+8. When [configuring the Management Console](management-console-setup.md) you will use the Account ID, Access Key ID, and S3 path to configure `Global Properties`
