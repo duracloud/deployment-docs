@@ -1,26 +1,26 @@
-# Initial DuraCloud Webapplication Environment Setup
+# Initial DuraCloud Web Application Environment Setup
 
 ## Create Environment
 0. Go to Beanstalk Service
-0. Create application
-0. Give it a name and description (e.g. DuraCloud)
-0. Click create web server
-0. Select "tomcat" platform and "load balancing" environment
-0. Click through defaults until you reach the configuration details and select m3.large instance, your keypair, basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
-0. Select the IAM instance role you set up previously.
-0. Launch the environment.
+1. Create application
+2. Give it a name and description (e.g. DuraCloud)
+3. Click create web server
+4. Select "tomcat" platform and "load balancing" environment
+5. Click through defaults until you reach the configuration details and select m3.large instance, your keypair, basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
+6. Select the IAM instance role you set up previously.
+7. Launch the environment.
 
 ## Environment Variables
 0. Navigate to environment -> configuration -> software configuration
-  * jvm command line params:
-    ""-Dduracloud.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file"
-  * environment params:
-     * key: S3_CONFIG_BUCKET
-     * value: <your-s3-config-bucket>
+   * jvm command line params:
+     ""-Dduracloud.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file"
+   * environment params:
+      * key: S3_CONFIG_BUCKET
+      * value: <your-s3-config-bucket>
 
 ## Autoscaling
 0. Set min/max instance counts to 5 and 10 respectively.
-0. Under scaling trigger section:
+1. Under scaling trigger section:
   * Trigger measurement: CPU Utilization
   * Trigger statistic: average
   * Unit of measurement: percent
@@ -33,8 +33,8 @@
 
 ## Load Balancer
 0. Navigate to "Load Balancing"
-0. Select session stickiness
-0. Navigate to EC2 -> load balancers
-0. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
+1. Select session stickiness
+2. Navigate to EC2 -> load balancers
+3. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).

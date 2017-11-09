@@ -1,9 +1,14 @@
 # AWS Setup
 
-Before installing the components that together comprise DuraCloud, you'll need set up your aws environment.
-Assuming you have an AWS account created, the following sections will guide you through this process.
+Before installing the components that together comprise DuraCloud, you will need set up your AWS environment.
 
-## Setup IAM Roles / Users  
+## Create an AWS account
+
+You will need an AWS account to provision AWS services for the deployment of DuraCloud. In order to support the growth of AWS accounts as your DuraCloud client base grows, it is recommended that one AWS account be designated as the master account through the [configuration of AWS Organizations](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_create.html), which was previously known as Consolidated Billing. 
+
+A sub-account should then be created which will be used for compute-related AWS resources. Once your sub-account is created, [log in to it](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html#orgs_manage_accounts_access-as-root) and create an IAM user with Administrative authority. Log in as this IAM user to proceed with the setup detailed below.
+
+## Set up IAM Roles / Users  
 Create the following IAM Roles with the specified policies.
 
 ### duracloud-instance
@@ -30,7 +35,7 @@ Attach the following inline policies:
         }
     ]
 }
-```  
+```
 **s3-policy**
 ```
 {
@@ -115,57 +120,57 @@ Attach the following inline policies:
 }
 ```
 
-# Create Keypairs 
+## Create Keypairs 
 Navigate to EC2, select `Keypairs` and create new keypairs with the following names:
 1. duracloud-keypair
-1. management-console-keypair
-1. mill-keypair
+2. management-console-keypair
+3. mill-keypair
 
-# Create and Configure VPC
-
+## Create and Configure VPC
 1. Create a new VPC with name "duracloud-vpc"
     1. IPv4 CIDR Block:  10.0.0.0/16
-    1. Select the newly created VPC and ensure that both "DNS Hostsnames" and "DNS Resolution" are both set to "Yes".
-    This is important for EFS to work properly.
-1. Create a subnet with name '10.0.1.0 <availability-zone> public'
+    2. Select the newly created VPC and ensure that both "DNS Hostsnames" and "DNS Resolution" are both set to "Yes".
+      This is important for EFS to work properly.
+2. Create a subnet with name '10.0.1.0 <availability-zone> public'
     1. Select duracloud-vpc
-    1. Specify the IPv4 CIDR Block: 10.0.1.0/24
-    1. After saving,  select the subnet, click subnet actions, and select "Modify auto-assign IP settings" and check auto-assign box.
-1. Optional: for higher availability and optimal spot pricing, create similar subnets in different availability zones.  For each new subnet, make
-sure that you increment your IPv4 CIDR Blocks (ie 10.0.2.0/24, 10.0.3.0/24, 10.0.4.0/24, etc...)
-1. Create an Internet Gateway named "duracloud-igw"
+    2. Specify the IPv4 CIDR Block: 10.0.1.0/24
+    3. After saving,  select the subnet, click subnet actions, and select "Modify auto-assign IP settings" and check auto-assign box.
+3. Optional: for higher availability and optimal spot pricing, create similar subnets in different availability zones.  For each new subnet, make
+  sure that you increment your IPv4 CIDR Blocks (ie 10.0.2.0/24, 10.0.3.0/24, 10.0.4.0/24, etc...)
+4. Create an Internet Gateway named "duracloud-igw"
     1. Select the gateway and attach it to "duracloud-vpc"
-1. Create a new route table named "duracloud-public-route" associated with your "duracloud-vpc"
+5. Create a new route table named "duracloud-public-route" associated with your "duracloud-vpc"
     1. Select the new route, click routes tab, click "edit", and add a new route where destination is 0.0.0.0/0 and
-    target is the duracloud-igw.
-    
+      target is the duracloud-igw.
 
-# Setup Security Groups
+## Set up Security Groups
 1. Navigate to EC2 -> Security Groups
-1. create a new security group:  mill-sg
+2. Create a new security group:  mill-sg
     1. Set the VPC to "duracloud-vpc"
-    1. Add the following inbound rules: 
+    2. Add the following inbound rules: 
         1. SSH
-        1. Use the "anywhere" source (ie. 0.0.0.0/0) or constrain to a limited set of IPs
-1. create a new security group:  efs-sg
+        2. Use the "anywhere" source (ie. 0.0.0.0/0) or constrain to a limited set of IPs
+3. Create a new security group:  efs-sg
     1. Set the VPC to "duracloud-vpc"
-    1. Add the following inbound rule: NFS using the mill-sg security group id into the NFS rule source field.
-        
+    2. Add the following inbound rule: NFS using the mill-sg security group id into the NFS rule source field.
 
-# Setup EFS
+## Set up EFS
 1. Navigate to EFS service and click create File System 
 2. Give the EFS the name tag "duracloud-efs" and ensure that all available subnets are selected and that you are using 
-the efs-sg security group.
+  the efs-sg security group.
 
-# Setup SES
+## Set up SES
 1. Go to the SES service in the AWS Console and create and verify a new email address.
-1. [Read section 5 in this document in order to move your SES account out of the sandbox.](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/quick-start.html)
+2. [Read section 5 in this document in order to move your SES account out of the sandbox.](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/quick-start.html)
 
-# SNS Topic
+## Set up SNS Topic
 This step is very simple: Go to the SNS service in the AWS Console and create an SNS topic name "duracloud-account-topic".  This topic will be 
 used by the management-console to notify topic subscribers of changes to the account database.
 
-# DuraCloud configuration buckets
+## Set up S3
+
+### DuraCloud configuration buckets
+
 1. Create a bucket with the following name <domain>-production-config
 2. Add the following file "duracloud-config.properties" to it: 
    ```
@@ -180,12 +185,12 @@ used by the management-console to notify topic subscribers of changes to the acc
    db.port=3306
    db.user=accountadmin
    db.pass=<account admin password>
-   
+
    mc.host=<your management console host>
    mc.port=443
    mc.context=
    mc.domain=<your management console domain>
-   
+
    # can we get rid of these credentials? 
    notification.user=<aws access key>
    notification.pass=<aws password key>
@@ -193,15 +198,18 @@ used by the management-console to notify topic subscribers of changes to the acc
    notification.admin-address=<duracloud admin email address>
    workDirectoryPath=/tmp/ama
 
-    ```
-    
+   ```
+
 ### Set up your github key for accessing private repos
 The cloud init scripts that provision the mill instances  depend on cloning 
 the https://github.com/duraspace/puppet-duracloud-mill.git repository. This repository, however is currently private.
 Until it becomes public,  we will need to grant you access to the repo.  Additionally you'll need to create a github ssh
 keypair and drop the private key in the bucket you created in the last step.
 
-     
+
 ###. Create CloudFront Signing Key and drop it in the config bucket
-@TODO: Bill can you take me through this processes? 
+Bill can you take me through this processes? 
+
+# DNS
+Describes configuration of DNS to support DuraCloud
 

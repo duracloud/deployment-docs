@@ -8,24 +8,19 @@ The following documents capture the steps required to build, release, and deploy
 * [Mill deployment] (deploy-mill.md) - Defines the steps required to deploy and configure the DuraCloud Mill
 * [DuraCloud Application](duracloud-webapp-setup.md) - Describes the process of deploying the DuraCloud applications (DuraStore and DurAdmin) using AWS Elastic Beanstalk
 * [Management Console](management-console-setup.md) -  Describes the process of deploying the DuraCloud Management Console using AWS Elastic Beanstalk
-* [DNS mapping and management]() - Describes configuration of DNS to support DuraCloud
-* [Monitoring tools]() - Describes how to setup monitoring tools used with DuraCloud
-* [Logging config]() - Describes log capture and visualization using SumoLogic
-* [DuraCloud Bridge]() - Describes configuration of the DuraCloud Bridge application, coordinating this with the DuraCloud applications, and use of the Bridge API
+* [Monitoring tools]() (Coming soon) - Describes how to setup monitoring tools used with DuraCloud
+* [Logging config]() (Coming soon) - Describes log capture and visualization using SumoLogic
+* [DuraCloud Bridge]() (Coming soon) - Describes configuration of the DuraCloud Bridge application, coordinating this with the DuraCloud applications, and use of the Bridge API
 
 ### System Updates
-* [Database updates]() - Describes how to perform database updates
-* [Application updates]() - Describes how to update the DuraCloud applications and Management Console software in Elastic Beanstalk
-* [Mill updates]() - Describes how to update the DuraCloud Mill software and configuration
+* [Updating DuraCloud](system-updates.md) - Describes how to perform updates to the DuraCloud database, applications, Management Console, and Mill
 
 ### Account Management
 * [Creating new accounts](creating-new-accounts.md) - Describes how a new client DuraCloud account is added to the system
 
 ### Architecture
-* [DuraCloud Architecture]() - Describes the overall DuraCloud architecture
-* [Database interaction]() - Describes how DuraCloud applications interact with the database
-* [Storage Providers]() - Describes how DuraCloud interacts with storage
+* [DuraCloud Architecture](architecture.md) - Describes the overall DuraCloud architecture and how the DuraCloud components operate together
 
 ### Software Development
-* [DuraCloud code contribution guidelines]() - Decribes the process by which code can be contributed to DuraCloud
+* [DuraCloud code contribution guidelines]() (Coming soon) - Decribes the process by which code can be contributed to DuraCloud
 * [DuraCloud Release Process](release-new-version.md) - Describes the DuraCloud software release process
