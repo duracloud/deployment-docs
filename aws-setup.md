@@ -164,14 +164,14 @@ Navigate to EC2, select `Keypairs` and create new keypairs with the following na
 2. [Read section 5 in this document in order to move your SES account out of the sandbox.](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/quick-start.html)
 
 ## Set up SNS Topic
-This step is very simple: Go to the SNS service in the AWS Console and create an SNS topic name "duracloud-account-topic".  This topic will be 
-used by the management-console to notify topic subscribers of changes to the account database.
+1. Go to the SNS service in the AWS Console and create an SNS topic name "duracloud-account-topic".  This topic will be used by the management-console to notify topic subscribers of changes to the account database.
+2. Assign at least one email subscriber to the topic (an address where you would like to receive DuraCloud notifications) and verify the subscription via the email link that is sent by SNS.
 
 ## Set up S3
 
 ### DuraCloud configuration buckets
 
-1. Create a bucket with the following name <domain>-production-config
+1. Create a bucket for production DuraCloud configuration (`domain`-production-config)
 2. Add the following file "duracloud-config.properties" to it: 
    ```
    mill.db.name=duracloud_mill
