@@ -210,6 +210,3 @@ keypair and drop the private key in the bucket you created in the last step.
 ###. Create CloudFront Signing Key and drop it in the config bucket
 Bill can you take me through this processes? 
 
-# DNS
-Describes configuration of DNS to support DuraCloud
-
