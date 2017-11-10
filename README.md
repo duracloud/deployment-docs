@@ -5,7 +5,7 @@ The following documents capture the steps required to build, release, and deploy
 ### Initial setup
 * [General AWS Environment Setup](aws-setup.md) - Describes the initial setup of an AWS account and the services which support DuraCloud deployment
 * [Database setup](database-setup.md) - Describes the setup of Amazon RDS to support DuraCloud
-* [Mill deployment] (mill-deploy.md) - Defines the steps required to deploy and configure the DuraCloud Mill
+* [Mill deployment](mill-setup.md) - Defines the steps required to deploy and configure the DuraCloud Mill
 * [DuraCloud Application](duracloud-webapp-setup.md) - Describes the process of deploying the DuraCloud applications (DuraStore and DurAdmin) using AWS Elastic Beanstalk
 * [Management Console](management-console-setup.md) -  Describes the process of deploying the DuraCloud Management Console using AWS Elastic Beanstalk
 * [Monitoring tools]() (Coming soon) - Describes how to setup monitoring tools used with DuraCloud
