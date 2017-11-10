@@ -49,8 +49,6 @@ Attach the following inline policies:
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::*.mill-bootstrap",
-                "arn:aws:s3:::*.mill-bootstrap/*",
                 "arn:aws:s3:::*.duplication-policy-repo",
                 "arn:aws:s3:::*.duplication-policy-repo/*"
             ]
@@ -127,32 +125,32 @@ Navigate to EC2, select `Keypairs` and create new keypairs with the following na
 3. mill-keypair
 
 ## Create and Configure VPC
-1. Create a new VPC with name "duracloud-vpc"
+1. Create a new VPC with name "duracloud"
     1. IPv4 CIDR Block:  10.0.0.0/16
     2. Select the newly created VPC and ensure that both "DNS Hostsnames" and "DNS Resolution" are both set to "Yes".
       This is important for EFS to work properly.
 2. Create a subnet with name '10.0.1.0 <availability-zone> public'
-    1. Select duracloud-vpc
+    1. Select duracloud
     2. Specify the IPv4 CIDR Block: 10.0.1.0/24
     3. After saving,  select the subnet, click subnet actions, and select "Modify auto-assign IP settings" and check auto-assign box.
 3. Optional: for higher availability and optimal spot pricing, create similar subnets in different availability zones.  For each new subnet, make
   sure that you increment your IPv4 CIDR Blocks (ie 10.0.2.0/24, 10.0.3.0/24, 10.0.4.0/24, etc...)
 4. Create an Internet Gateway named "duracloud-igw"
-    1. Select the gateway and attach it to "duracloud-vpc"
-5. Create a new route table named "duracloud-public-route" associated with your "duracloud-vpc"
+    1. Select the gateway and attach it to "duracloud"
+5. Create a new route table named "duracloud-public-route" associated with your "duracloud"
     1. Select the new route, click routes tab, click "edit", and add a new route where destination is 0.0.0.0/0 and
       target is the duracloud-igw.
 
 ## Set up Security Groups
 1. Navigate to EC2 -> Security Groups
-2. Create a new security group:  mill-sg
-    1. Set the VPC to "duracloud-vpc"
+2. Create a new security group:  mill-vpc
+    1. Set the VPC to "duracloud"
     2. Add the following inbound rules: 
         1. SSH
         2. Use the "anywhere" source (ie. 0.0.0.0/0) or constrain to a limited set of IPs
-3. Create a new security group:  efs-sg
-    1. Set the VPC to "duracloud-vpc"
-    2. Add the following inbound rule: NFS using the mill-sg security group id into the NFS rule source field.
+3. Create a new security group:  efs-vpc
+    1. Set the VPC to "duracloud"
+    2. Add the following inbound rule: NFS using the mill-vpc security group id into the NFS rule source field.
 
 ## Set up EFS
 1. Navigate to EFS service and click create File System 
@@ -219,3 +217,18 @@ A CloudFront Signing Key is used by DuraCloud to digitally sign requests for str
    `s3://<domain>-production-config/production-cloudfront-signing-key.dir`
 7. In the AWS console, navigate to [Account Settings](https://console.aws.amazon.com/billing/home?#/account) and capture the Account ID
 8. When [configuring the Management Console](management-console-setup.md) you will use the Account ID, Access Key ID, and S3 path to configure `Global Properties`
+
+### Create shared buckets
+Due to a long ago adopted duracloud convention related to preventing all buckets from showing up in a duracloud
+space listing as well as guarantee uniqueness of spaces within a single account,  there are two buckets that you'l
+l need to create with a quirky prefix.  That prefix must be 20 lowercase alpha-numeric characters followed by a 
+period. For example: akiajammmxxxplax656a."  Look familiar?  Yes, this is the aws access key id. Any string of 
+alphanumeric characters will do as long as they are unique.  So create two buckets:   
+* yourtwentycharprefix.auditlogs
+* yourtwentycharprefix.duplication-policy-repo
+
+In the duplication policy repo you must drop a file named "duplication-accounts.json" that contains a single empty 
+json array - namely:
+```
+[]
+```
