@@ -48,10 +48,10 @@
 ## Create database users and grant privileges  
 **Be sure to change the passwords in the script first**
 
-    ```
+   ```
     grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' identified by 'accountsadminpassword';
     grant select on duracloud_accounts.* to 'accountsreader'@'%' identified by 'accountsreaderpassword';
     grant all privileges on duracloud_mill.* to 'milladmin'@'%' identified by 'milladminpassword';
     grant select on duracloud_mill.* to 'millreader'@'%' identified by 'millreaderpassword';
     flush privileges;
-    ```
+   ```
