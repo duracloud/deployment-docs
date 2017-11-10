@@ -1,12 +1,16 @@
 # Initial DuraCloud Web Application Environment Setup
 
+The DuraCloud web applications are run using AWS Elastic Beanstalk. This service manages the deployment of the applications, the configuration of load balancing, and the configuration of auto-scaling. The first step is to create an Elastic Beanstalk environment, followed by the configuration of each component.
+
 ## Create Environment
-1. Go to Beanstalk Service
-2. Create application
+
+1. Go to the Beanstalk Service in the AWS console
+2. Select `Create New Application`
 3. Give it a name and description (e.g. DuraCloud)
 4. Click create web server
 5. Select "tomcat" platform and "load balancing" environment
-6. Click through defaults until you reach the configuration details and select m3.large instance, your keypair, basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
+6. Click through defaults until you reach the configuration details, then select an m3.large instance type, your keypair, basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
+   1. Note: Enhanced health reporting in Beanstalk cannot be used with DuraCloud as it will report failures on HTTP responses which have a 404 response code. This response code is perfectly valid for a REST API when an item that is requested does not exist. The DuraCloud SyncTool makes frequent use of requests to check for the existence of files prior to uploads, which often result in 404 responses. Using Enhanced health reporting with Beanstalk will result in functional DuraCloud instances being taken out of service.
 7. Select the IAM instance role you set up previously.
 8. Launch the environment.
 
@@ -19,7 +23,8 @@
        * value: <your-s3-config-bucket>
 
 ## Autoscaling
-1. Set min/max instance counts to 5 and 10 respectively.
+1. Set min/max instance counts based on your system needs.
+   1. An initial minimum of 3 and maximum of 7 should be sufficient. When consistent load is higher you may choose to increase these numbers.
 2. Under scaling trigger section:
   * Trigger measurement: CPU Utilization
   * Trigger statistic: average
@@ -38,6 +43,17 @@
 4. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).
+
+## SSL
+
+In order to configure SSL, you must first have a valid SSL certificate for your domain.
+
+* It is recommended that a wildcard SSL certificate be used, as that will allow all subdomains to be covered.
+* The SSL certificate can be created through Route 53, if Route 53 is your domain registrar (or if you've transferred control of your domain to Route 53.) If not using Route 53, you will need to purchase an SSL certificate from a certificate authority. SSL certificates are often available from domain registrars.
+* If you are using Route 53 to create an SSL certificate, it is automatically included in IAM for use in Elastic Beanstalk. If not using Route 53, [you will need to import your certificate to IAM](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/configuring-https-ssl-upload.html).
+* Once the certificate is in place in IAM, go back to Elastic Beanstalk -> Configuration -> Load Balancing
+* In the dropdown next to `SSL certificate ID` select your certificate
+* Select `Apply`
 
 ## DNS
 

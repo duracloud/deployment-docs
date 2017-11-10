@@ -167,8 +167,7 @@ VPC is used for the deployment of DuraCloud Mill instances.
 ## Set up SNS Topic
 1. Go to the SNS service in the AWS Console
 2. Create an SNS topic name "duracloud-account-topic".  This topic will be used by the management-console to notify topic subscribers of changes to the account database. Subscribers for this topic will be the DuraCloud applications on each instance.
-3. @TODO: Create other SNS topics for duracloud and mill notifications
-   1. Assign at least one email subscriber to the topic (an address where you would like to receive DuraCloud notifications) and verify the subscription via the email link that is sent by SNS.
+3. Create at least one SNS topic to allow for email notifications from Elastic Beanstalk and Amazon Cloudwatch. You may want distinct topics for DuraCloud and Mill notifications. Assign at least one email subscriber to each topic (an address where you would like to receive DuraCloud notifications) and verify the subscription via the email link that is sent by SNS.
 
 ## Set up S3
 
