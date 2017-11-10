@@ -12,7 +12,7 @@ A sub-account should then be created which will be used for compute-related AWS 
 Create the following IAM Roles with the specified policies. These IAM roles are used to provide the DuraCloud applications and systems with the necessary access to AWS services.
 
 ### duracloud-instance
-Policies:  AmazonSQSFullAccess, AmazonSESFullAccess, AmazonS3ReadOnlyAccess
+Policies:  AmazonSNSFullAccess, AmazonSQSFullAccess, AmazonSESFullAccess, AmazonS3ReadOnlyAccess
 ### management-console  
 Policies:  AmazonSESFullAccess, AmazonSNSFullAccess,AmazonS3FullAccess
 ### duracloud-mill  
@@ -200,6 +200,16 @@ VPC is used for the deployment of DuraCloud Mill instances.
    workDirectoryPath=/tmp/ama
 
    ```
+3. Even if you're not planning to use sumologic for log aggregation and visualization you
+   must place the a sumo.conf file in this bucket.  You can use dummy values for the credentials.
+   At some point we may want to handle this more elegantly.
+   ```
+   accessid=<sumo-access-id>
+   accesskey=<sumo-access-key>
+   rpmAutoStart=false
+   syncSources=/etc/sumo_sources.json
+
+```
 
 ### Set up your github key for accessing private repos
 The cloud init scripts that provision the mill instances  depend on cloning 

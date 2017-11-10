@@ -9,6 +9,7 @@
 5. Enter your preferences in terms of backup schedule, etc.
 6. Do not put the database in a VPC at this time.
 7. Create the instance
+8. Navigate to the instance security groups, select the RDS group and add a rule with a CIDR/IP of 0.0.0.0/0
 
 ## Create account database
 1. Clone the duracloud management console repository:
@@ -44,7 +45,6 @@
     ```
     mysql -u root -h your.mysql.host duracloud_mill < mill/resources/mill-schema-2.5.2.sql
     ```
-
 ## Create database users and grant privileges  
 **Be sure to change the passwords in the script first**
 
