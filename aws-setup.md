@@ -49,8 +49,7 @@ Attach the following inline policies:
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::*.duplication-policy-repo",
-                "arn:aws:s3:::*.duplication-policy-repo/*"
+                "*"
             ]
         },
         {
