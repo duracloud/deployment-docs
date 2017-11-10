@@ -230,4 +230,4 @@ In the duplication policy repo you must drop a file named "duplication-accounts.
 ```
 []
 ```
-More will be added the duplication-policy-repo bucket as configuration continues.
+Further content and configuration of the duplication-policy-repo bucket is included in the [Mill configuration](mill-setup.md).
