@@ -9,7 +9,7 @@ You will need an AWS account to provision AWS services for the deployment of Dur
 A sub-account should then be created which will be used for compute-related AWS resources. Once your sub-account is created, [log in to it](http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html#orgs_manage_accounts_access-as-root) and create an IAM user with Administrative authority. Log in as this IAM user to proceed with the setup detailed below.
 
 ## Set up IAM Roles / Users  
-Create the following IAM Roles with the specified policies.
+Create the following IAM Roles with the specified policies. These IAM roles are used to provide the DuraCloud applications and systems with the necessary access to AWS services.
 
 ### duracloud-instance
 Policies:  AmazonSQSFullAccess, AmazonSESFullAccess, AmazonS3ReadOnlyAccess
@@ -119,17 +119,19 @@ Attach the following inline policies:
 ```
 
 ## Create Keypairs 
-Navigate to EC2, select `Keypairs` and create new keypairs with the following names:
+Navigate to EC2, select `Keypairs` and create new keypairs with the following names. These keypairs are associated with EC2 instances as they are started. The keypairs allow SSH access to these instances.
 1. duracloud-keypair
 2. management-console-keypair
 3. mill-keypair
 
 ## Create and Configure VPC
+VPC is used for the deployment of DuraCloud Mill instances.
+
 1. Create a new VPC with name "duracloud"
     1. IPv4 CIDR Block:  10.0.0.0/16
     2. Select the newly created VPC and ensure that both "DNS Hostsnames" and "DNS Resolution" are both set to "Yes".
       This is important for EFS to work properly.
-2. Create a subnet with name '10.0.1.0 <availability-zone> public'
+2. Create a subnet with name '10.0.1.0 `availability-zone` public'
     1. Select duracloud
     2. Specify the IPv4 CIDR Block: 10.0.1.0/24
     3. After saving,  select the subnet, click subnet actions, and select "Modify auto-assign IP settings" and check auto-assign box.
@@ -142,7 +144,7 @@ Navigate to EC2, select `Keypairs` and create new keypairs with the following na
       target is the duracloud-igw.
 
 ## Set up Security Groups
-1. Navigate to EC2 -> Security Groups
+1. Navigate to EC2 -> Security Groups in the AWS console
 2. Create a new security group:  mill-vpc
     1. Set the VPC to "duracloud"
     2. Add the following inbound rules: 
@@ -153,17 +155,20 @@ Navigate to EC2, select `Keypairs` and create new keypairs with the following na
     2. Add the following inbound rule: NFS using the mill-vpc security group id into the NFS rule source field.
 
 ## Set up EFS
-1. Navigate to EFS service and click create File System 
-2. Give the EFS the name tag "duracloud-efs" and ensure that all available subnets are selected and that you are using 
-  the efs-sg security group.
+1. Navigate to EFS in the AWS console
+2. Click `Create File System `
+3. Give the EFS the name tag "duracloud-efs" and ensure that all available subnets are selected and that you are using the efs-sg security group.
 
 ## Set up SES
-1. Go to the SES service in the AWS Console and create and verify a new email address.
-2. [Read section 5 in this document in order to move your SES account out of the sandbox.](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/quick-start.html)
+1. Go to the SES service in the AWS Console
+2. Create and verify a new email address.
+3. [Read section 5 in this document in order to move your SES account out of the sandbox.](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/quick-start.html)
 
 ## Set up SNS Topic
-1. Go to the SNS service in the AWS Console and create an SNS topic name "duracloud-account-topic".  This topic will be used by the management-console to notify topic subscribers of changes to the account database.
-2. Assign at least one email subscriber to the topic (an address where you would like to receive DuraCloud notifications) and verify the subscription via the email link that is sent by SNS.
+1. Go to the SNS service in the AWS Console
+2. Create an SNS topic name "duracloud-account-topic".  This topic will be used by the management-console to notify topic subscribers of changes to the account database. Subscribers for this topic will be the DuraCloud applications on each instance.
+3. @TODO: Create other SNS topics for duracloud and mill notifications
+   1. Assign at least one email subscriber to the topic (an address where you would like to receive DuraCloud notifications) and verify the subscription via the email link that is sent by SNS.
 
 ## Set up S3
 
@@ -219,16 +224,12 @@ A CloudFront Signing Key is used by DuraCloud to digitally sign requests for str
 8. When [configuring the Management Console](management-console-setup.md) you will use the Account ID, Access Key ID, and S3 path to configure `Global Properties`
 
 ### Create shared buckets
-Due to a long ago adopted duracloud convention related to preventing all buckets from showing up in a duracloud
-space listing as well as guarantee uniqueness of spaces within a single account,  there are two buckets that you'l
-l need to create with a quirky prefix.  That prefix must be 20 lowercase alpha-numeric characters followed by a 
-period. For example: akiajammmxxxplax656a."  Look familiar?  Yes, this is the aws access key id. Any string of 
-alphanumeric characters will do as long as they are unique.  So create two buckets:   
+Due to a long ago adopted DuraCloud convention related to preventing all buckets from showing up in a DuraCloud space listing as well as guarantee uniqueness of spaces within a single account,  there are two buckets that you'll need to create with a quirky prefix.  That prefix must be 20 lowercase alpha-numeric characters followed by a period. For example: akiajammmxxxplax656a."  Look familiar?  Yes, by default this is the AWS Access Key ID. Any string of alphanumeric characters will do as long as they are unique.  So create two buckets:   
 * yourtwentycharprefix.auditlogs
 * yourtwentycharprefix.duplication-policy-repo
 
-In the duplication policy repo you must drop a file named "duplication-accounts.json" that contains a single empty 
-json array - namely:
+In the duplication policy repo you must drop a file named "duplication-accounts.json" that contains a single empty json array - namely:
 ```
 []
 ```
+More will be added the duplication-policy-repo bucket as configuration continues.
