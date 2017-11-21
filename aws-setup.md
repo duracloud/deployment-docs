@@ -209,7 +209,7 @@ VPC is used for the deployment of DuraCloud Mill instances.
    rpmAutoStart=false
    syncSources=/etc/sumo_sources.json
 
-```
+   ```
 
 ### Set up your github key for accessing private repos
 The cloud init scripts that provision the mill instances  depend on cloning 
