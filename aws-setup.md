@@ -192,7 +192,7 @@ VPC is used for the deployment of DuraCloud Mill instances.
    mc.context=
    mc.domain=<your management console domain>
 
-   # can we get rid of these credentials? 
+   # using the latest versions of duracloud.artifact >= 4.4.0 you can avoid to put the AWS KEY here
    notification.user=<aws access key>
    notification.pass=<aws password key>
    notification.from-address=<notification sender email address> 
@@ -227,7 +227,7 @@ A CloudFront Signing Key is used by DuraCloud to digitally sign requests for str
 5. Reformat the private key for use in Java (from PEM to DER format)
    `openssl pkcs8 -topk8 -nocrypt -in origin.pem -inform PEM -out new.der -outform DER`
 6. Add the new DER formatted file to the production-config S3 bucket created above and capture the path of the file in S3, it will be something like:
-   `s3://<domain>-production-config/production-cloudfront-signing-key.dir`
+   `s3://<domain>-production-config/production-cloudfront-signing-key.der`
 7. In the AWS console, navigate to [Account Settings](https://console.aws.amazon.com/billing/home?#/account) and capture the Account ID
 8. When [configuring the Management Console](management-console-setup.md) you will use the Account ID, Access Key ID, and S3 path to configure `Global Properties`
 
