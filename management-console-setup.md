@@ -20,7 +20,7 @@ proceeding.
     ```-Dduracloud.home=/tmp/duracloud-home -Dmc.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
   * environment params:
      * key: S3_CONFIG_BUCKET
-     * value: <your-s3-config-bucket>
+     * value: ```<your-s3-config-bucket>```
 
 ### Configure Autoscaling
 0. Set min/max instance counts to 2 and 3 respectively.
