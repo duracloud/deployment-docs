@@ -20,7 +20,7 @@ proceeding.
     ```-Dduracloud.home=/tmp/duracloud-home -Dmc.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
   * environment params:
      * key: S3_CONFIG_BUCKET
-     * value: <your-s3-config-bucket>
+     * value: ```<your-s3-config-bucket>```
 
 ### Configure Autoscaling
 0. Set min/max instance counts to 2 and 3 respectively.
@@ -78,11 +78,5 @@ You are now ready to deploy the DuraCloud beanstalk zip. You can do so by follow
    document, and paste into the `Instance Notification Topic ARN` field.
 0. Retrieve your CloudFront account id, the access key id and s3 path to your CloudFront key.
    These values you set aside in the CloudFront Key generation step in the [AWS setup](aws-setup.md)
-   document and plug them into their respecitive fields in the form.
-0. Now you are ready to [start creating accounts](creating-new-accounts.md). 
-   
-
-
-    
-
-
+   document and plug them into their respecitive fields in the form. 
+0. Now you are ready to [start creating accounts](creating-new-accounts.md). The first account you create should be the account that will be used to store and access your auditlogs and duplication-policy-repo, as noted in the instructions for the (duplication-policy-editor](mill-setup.md#deploy-the-duplication-policy-editor)
