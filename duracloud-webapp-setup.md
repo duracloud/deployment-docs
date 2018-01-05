@@ -7,9 +7,12 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
 1. Go to the Beanstalk Service in the AWS console
 2. Select `Create New Application`
 3. Give it a name and description (e.g. DuraCloud)
-4. Click create web server
-5. Select "tomcat" platform and "load balancing" environment
-6. Click through defaults until you reach the configuration details, keep the sample application (the duracloud apps will be load later when the configuration is complete) then select an m3.large instance type, your keypair, 
+4. Click `Create web server`
+5. Select `Tomcat` platform and `Load balancing, auto scaling` environment
+6. Select the `Sample application` (it will be replaced by DuraCloud apps in a later step), and keep the default deployment preferences
+7. Take defaults for environment name and URL (or update them if you'd prefer.) The environment URL must be unique.
+8. Leave additional resources unchecked
+9. In configuration details, select an m3.large instance type, your keypair, 
    basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
    1. Note: Enhanced health reporting in Beanstalk cannot be used with DuraCloud as it will report failures on HTTP 
    responses which have a 404 response code. This response code is perfectly valid for a REST API when an item that is requested does not exist. The DuraCloud SyncTool makes frequent use of requests to check for the existence of files prior to uploads, which often result in 404 responses. Using Enhanced health reporting with Beanstalk will result in functional DuraCloud instances being taken out of service.
