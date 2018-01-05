@@ -79,10 +79,4 @@ You are now ready to deploy the DuraCloud beanstalk zip. You can do so by follow
 0. Retrieve your CloudFront account id, the access key id and s3 path to your CloudFront key.
    These values you set aside in the CloudFront Key generation step in the [AWS setup](aws-setup.md)
    document and plug them into their respecitive fields in the form. 
-0. Now you are ready to [start creating accounts](creating-new-accounts.md). Please start creating a DevOps account to access your auditlogs and duplication-policy-repo, review the instruction provided in the mill-deploy for the (duplication-policy-editor](mill-setup.md#deploy-the-duplication-policy-editor)
-   
-
-
-    
-
-
+0. Now you are ready to [start creating accounts](creating-new-accounts.md). The first account you create should be the account that will be used to store and access your auditlogs and duplication-policy-repo, as noted in the instructions for the (duplication-policy-editor](mill-setup.md#deploy-the-duplication-policy-editor)
