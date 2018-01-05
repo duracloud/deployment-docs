@@ -17,6 +17,7 @@ The following documents capture the steps required to build, release, and deploy
 
 ### Account Management
 * [Creating new accounts](creating-new-accounts.md) - Describes how a new client DuraCloud account is added to the system
+* [Closing accounts](closing-accounts.md) - Describes how to deactivate, delete, and transition DuraCloud accounts
 
 ### Architecture
 * [DuraCloud Architecture](architecture.md) - Describes the overall DuraCloud architecture and how the DuraCloud components operate together
