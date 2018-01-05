@@ -192,7 +192,7 @@ VPC is used for the deployment of DuraCloud Mill instances.
    mc.context=
    mc.domain=<your management console domain>
 
-   # DuraCloud versions >= 4.4.0 allow for leaving out the notification credentials
+   # DuraCloud versions >= 4.4.3 allow for leaving out the notification credentials
    notification.user=<aws access key>
    notification.pass=<aws password key>
    notification.from-address=<notification sender email address> 
