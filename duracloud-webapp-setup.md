@@ -55,7 +55,7 @@ In order to configure SSL, you must first have a valid SSL certificate for your 
 
 * It is recommended that a wildcard SSL certificate be used, as that will allow all subdomains to be covered.
 * The SSL certificate can be created through Route 53, if Route 53 is your domain registrar (or if you've transferred control of your domain to Route 53.) If not using Route 53, you will need to purchase an SSL certificate from a certificate authority. SSL certificates are often available from domain registrars.
-* If you are using Route 53 to create an SSL certificate, it is automatically included in IAM for use in Elastic Beanstalk. If you have used a different account (as for instance the root account) to register the domain, you need to create the certificate from the AWS Account used to run the DuraCloud infrastructure. If not using Route 53, [you will need to import your certificate to IAM](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/configuring-https-ssl-upload.html).
+* If you are using Route 53 to create an SSL certificate, it is automatically included in IAM for use in Elastic Beanstalk. If you have used a different AWS account (such as another account in your AWS Organization) to register the domain, you will need to create the certificate from the AWS account used to run the DuraCloud infrastructure in order for it to be available in Beanstalk. If not using Route 53, [you will need to import your certificate to IAM](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/configuring-https-ssl-upload.html).
 * Once the certificate is in place in IAM, go back to Elastic Beanstalk -> Configuration -> Load Balancing
 * In the dropdown next to `SSL certificate ID` select your certificate
 * Select `Apply`
