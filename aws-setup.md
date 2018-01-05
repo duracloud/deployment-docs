@@ -192,7 +192,7 @@ VPC is used for the deployment of DuraCloud Mill instances.
    mc.context=
    mc.domain=<your management console domain>
 
-   # using the latest versions of duracloud.artifact >= 4.4.0 you can avoid to put the AWS KEY here
+   # DuraCloud versions >= 4.4.0 allow for leaving out the notification credentials
    notification.user=<aws access key>
    notification.pass=<aws password key>
    notification.from-address=<notification sender email address> 
