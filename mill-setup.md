@@ -20,6 +20,10 @@ mkdir -p mill-config/production
 
 1. Follow the instructions for deploying the mill in the mill-deploy/README.
 
+## Deployment Notes
+
+* When configuring the size of the Duplication instances, be aware that the duplication process requires a decent amount of memory to execute. In testing, a t2.micro instance is not enough, but a t2.medium seems to work well.
+
 ## Deploy the duplication policy editor
 
 The Duplication Policy Editor allows the DuraCloud administrator to set the duplication policies for each space
