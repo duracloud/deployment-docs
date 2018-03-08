@@ -2,6 +2,8 @@
 
 The following documents capture the steps required to build, release, and deploy DuraCloud software
 
+A special thanks to the [DuraCloud Europe](https://www.duracloudeurope.org/) team at [4Science](https://www.4science.it) for contributing to and funding the development of these documents! :thumbsup:
+
 ### Initial setup
 * [General AWS Environment Setup](aws-setup.md) - Describes the initial setup of an AWS account and the services which support DuraCloud deployment
 * [Database setup](database-setup.md) - Describes the setup of Amazon RDS to support DuraCloud
