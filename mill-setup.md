@@ -43,3 +43,15 @@ a bootstrap duracloud account using  credentials associated with the account tha
 Once your [DuraCloud Application](duracloud-webapp-setup.md) is deployed you should be able to follow the steps to 
 [create a new account](creating-new-accounts.md), employing the account that you have already been using to host your
 DuraCloud core infrastructure.
+
+## How-Tos
+
+### How to pause the Manifest Cleaner
+
+Occassionally you may want to pause the activity of the manifest cleaner in order to lighten the load on the database.  The manifest cleaner (manifest-cleaner-<version>.jar) is responsible for purging manifest records that have been flagged for deletion.  When the contents of large spaces are deleted (as is the case when a  bridge snapshot completes), a large number of deletes will hit the database at the same time.  When those deleted manifest entries are purged from the manifest table,  it can result in slower performance of the manifest table indices which can in turn slow the throughput of writes to the manifest table. In turn this can exacerbate a back up of unprocessed audit messages.  To ameliorate this situation, you can temporarily suspend the manifest-cleaner until the audit queue has been consumed to a reasonable size.
+
+1. Log into the sentinel.
+2. ``cd /home/duracloud``
+3. ``sudo mv manifest-cleaner-<version>.jar manifest-cleaner.jar.offline``
+4.  ``sudo service manifest-cleaner stop``
+5. Verify that the manifest-cleaner java process is no longer running.
