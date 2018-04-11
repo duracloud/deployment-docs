@@ -10,6 +10,11 @@ To close out an account in DuraCloud where content will be removed you will need
 2. Remove all content and spaces. This can be done using the DuraCloud UI by selecting all spaces and choosing `Delete`. Note that the spaces will delete from the UI initially, but a refresh of the Spaces tab will show they still exist. In the background the content is being deleted, and when all content is gone, the space will be deleted as well. This process can take some time, especially if there is significant content in the spaces. You will want to keep an eye on this process to ensure the deletes continue. If the deletes stop for a space, simply delete it again to get them going.
 3. Once all content is removed, go the Management Console, find the account, and select to Deactivate it. Deactivating an account retains all account settings, but the account is no longer available through DuraCloud. You may choose to leave the account in the deactivated state for as long as needed, or reactivate it at any time.. Virtually no resources are consumed by accounts in the deactivated state.
 4. If you'd like to remove the account completely, go the Root Console, find the account, and select Delete. This will remove the account along with all of its settings and storage providers. This will not remove users associated with the account, but it will remove the association between those users and the account.
+5. If the account has a duplication policy (i.e. it is replicating content to secondary storage), remove the duplication policy for the account via the policy editor. 
+   a. Open the Duplication Policy Editor
+   b. Enter your DuraCloud credentials and the subdomain of the DuraCloud account where the duplication policies are hosted, then select      `Sign In`. You will see the list of all DuraCloud accounts for which duplication is configured
+   c. Click on the trash icon to delete the duplication policy for the subdomain of the account you have closed
+6. Remove the subdomain CNAME from the zone file of your domain registrar (e.g. GoDaddy).
 
 ## Closing an account - transitioning AWS account
 
