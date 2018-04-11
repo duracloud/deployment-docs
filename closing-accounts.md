@@ -11,9 +11,9 @@ To close out an account in DuraCloud where content will be removed you will need
 3. Once all content is removed, go the Management Console, find the account, and select to Deactivate it. Deactivating an account retains all account settings, but the account is no longer available through DuraCloud. You may choose to leave the account in the deactivated state for as long as needed, or reactivate it at any time.. Virtually no resources are consumed by accounts in the deactivated state.
 4. If you'd like to remove the account completely, go the Root Console, find the account, and select Delete. This will remove the account along with all of its settings and storage providers. This will not remove users associated with the account, but it will remove the association between those users and the account.
 5. If the account has a duplication policy (i.e. it is replicating content to secondary storage), remove the duplication policy for the account via the policy editor. 
-   a. Open the Duplication Policy Editor.
-   b. Enter your DuraCloud credentials and the subdomain of the DuraCloud account where the duplication policies are hosted, then select      `Sign In`. You will see the list of all DuraCloud accounts for which duplication is configured.
-   c. Click on the trash icon to delete the duplication policy for the subdomain of the account you have closed.
+   1. Open the Duplication Policy Editor.
+   2. Enter your DuraCloud credentials and the subdomain of the DuraCloud account where the duplication policies are hosted, then select      `Sign In`. You will see the list of all DuraCloud accounts for which duplication is configured.
+   3. Click on the trash icon to delete the duplication policy for the subdomain of the account you have closed.
 6. Remove the subdomain CNAME from the zone file of your domain registrar (e.g. GoDaddy).
 
 ## Closing an account - transitioning AWS account
