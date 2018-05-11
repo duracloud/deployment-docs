@@ -46,7 +46,14 @@
     mysql -u root -h your.mysql.host duracloud_mill < mill/resources/mill-schema-2.5.2.sql
     ```
 ## Create database users and grant privileges  
-**Be sure to change the passwords in the script first**
+1. Create 4 users in your database:
+
+* accountsadmin - this user will have administrative rights to the accounts database
+* accountsreader - this user will have read-only access to the accounts database
+* milladmin - this user will have administrative rights to the mill database
+* millreader - this user will have read-only access to the mill database
+
+2. Grant rights to the users using these commands (**be sure to change the passwords in the script first**):
 
    ```
     grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' identified by 'accountsadminpassword';

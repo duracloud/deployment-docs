@@ -25,5 +25,6 @@ A special thanks to the [DuraCloud Europe](https://www.duracloudeurope.org/) tea
 * [DuraCloud Architecture](architecture.md) - Describes the overall DuraCloud architecture and how the DuraCloud components operate together
 
 ### Software Development
-* [DuraCloud code contribution guidelines](code-guidelines.md) (Coming soon) - Decribes the process by which code can be contributed to DuraCloud
+* [Development Guide: Getting Started](dev-guide-getting-started.md) - Learn how to set up your development environment to work on DuraCloud software
+* [DuraCloud code contribution guidelines](code-guidelines.md) (Coming soon) - Describes the process by which code can be contributed to DuraCloud
 * [DuraCloud Release Process](release-new-version.md) - Describes the DuraCloud software release process
