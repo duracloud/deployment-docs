@@ -2,7 +2,7 @@
 
 The purpose of this guide is to walk you through the steps required to set up your local environment for working on the DuraCloud software. 
 
-After you have completed these steps, you should have an operational DuraCloud deployment, running on your local machine.
+After you have completed these steps, you should have an operational DuraCloud deployment running on your local machine.
 
 ## AWS account
 If you don't already have an AWS account for working with DuraCloud, start by [creating one](https://aws.amazon.com/). While the DuraCloud software will be run on your local machine for development and testing, the software expects to be able to connect to AWS for email  ([SES](https://aws.amazon.com/ses/)), system notifications ([SNS](https://aws.amazon.com/sns/)), system queues ([SQS](https://aws.amazon.com/sqs/)), and storage ([S3](https://aws.amazon.com/s3/)).
@@ -10,9 +10,9 @@ If you don't already have an AWS account for working with DuraCloud, start by [c
 Once you  have an AWS account, you will need to:
 * [Add a user in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with permissions to use SES, SNS, SQS, and S3. This user does not need to have console access, but access keys are required.
 * Verify an email address in the AWS SES service. In order to send emails via SES, the address used to send those emails needs to be verified. If SES is still in sandbox mode (where it starts for all new accounts) you will also need to verify addresses before sending mail to them. You can request that SES be transitioned into production mode at any time.
-* Create a bucket in S3 for audit data. This bucket will be used to store audit logs. Using the default bucket settings will be fine. Capture the bucket name, you will need it later.
-* Create a queue for audit data in the SQS service. The queue type should be Standard. This queue will be used to capture audit information as changes are made in DuraCloud. Capture the queue name, you will need it later.
-* Create a topic in the SNS service. This topic will be used to send notifications from the Management Console to DuraCloud when users or accounts change. Capture the topic ARN, you will need it later.
+* Create a bucket in S3 for audit data. This bucket will be used to store audit logs. Using the default bucket settings will be fine. Capture the bucket name for use in following steps.
+* Create a queue for audit data in the SQS service. The queue type should be Standard. This queue will be used to capture audit information as changes are made in DuraCloud. Capture the queue name for use in following steps.
+* Create a topic in the SNS service. This topic will be used to send notifications from the Management Console to DuraCloud when users or accounts change. Capture the topic ARN for use in following steps.
 
 ## Base software
 
@@ -23,7 +23,8 @@ Install the following software:
 3. [Tomcat (version 8.x)](https://tomcat.apache.org/download-80.cgi)
 4. [Git (latest version)](https://git-scm.com/downloads)
 
-Once each of these is installed, open up your console (on Windows, consider using git-bash as your console, it's far more useful than the standard Windows command prompt) and verify that each is available on your path.
+Once each of these is installed, open up your console and verify that each is available on your path. *Tip: On Windows, consider using git-bash as your console, it's far more useful than the standard Windows command prompt*
+
 * For Java: `java -version`
 * For Git: `git --version`
 * For Maven: `mvn -version`
