@@ -46,6 +46,7 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
 2. Select session stickiness
 3. Navigate to EC2 -> load balancers
 4. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
+5. Under Attributes change the "Idle timeout" property to 180 seconds.
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).
 
