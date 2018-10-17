@@ -34,6 +34,8 @@ If any of these fail to come back with a version value (usually saying something
 
 Add a system environment variable named **JAVA_HOME** with the path to your Java JDK (the top level directory, not the /bin directory). This environment variable allows Tomcat and Maven to find Java.
 
+(Optional) Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html) to be able to interact with AWS services via the command line.
+
 ## Database
 
 DuraCloud requires a MySQL database. You can [install MySQL Server](https://dev.mysql.com/downloads/) on your local machine or launch a MySQL server using [Amazon RDS](https://aws.amazon.com/rds/)
@@ -88,6 +90,16 @@ JAVA_OPTS="${JAVA_OPTS} -Daws.accessKeyId=<aws iam access key id>"
 JAVA_OPTS="${JAVA_OPTS} -Daws.secretKey=<aws iam secret key>"
 ```
 Replace all values enclosed in `<>` with the correct values for your environment. The `<account name>` is the account name you will be creating in a later step. Go ahead and choose a name for this account now and add it to the configuration file.
+
+During application startup, the AWS client built into the DuraCloud applications will need to know your preferred AWS region, along with the credentials noted above. If you have installed the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html), you may already have a default region defined in `~/.aws/config` (or `C:/Users/<username>/.aws/config` on Windows). The default region should have the following format:
+```
+[default]
+region = preferred_aws_region
+```
+If you are not using the AWS CLI tools, you can still create a .aws/config file for this purpose. Alternatively, you can define the region by adding another variable to your `setenv.sh`:
+```
+JAVA_OPTS="${JAVA_OPTS} -DAWS_REGION=<preferred aws region>"
+```
 
 ### Configure Tomcat
 *Configure Tomcat to allow for deployment of the DuraCloud web applications from your Maven build*
