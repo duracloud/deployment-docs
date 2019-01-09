@@ -10,7 +10,7 @@ If you don't already have an AWS account for working with DuraCloud, start by [c
 Once you  have an AWS account, you will need to:
 * [Add a user in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with permissions to use SES, SNS, SQS, and S3. This user does not need to have console access, but access keys are required.
 * Verify an email address in the AWS SES service. In order to send emails via SES, the address used to send those emails needs to be verified. If SES is still in sandbox mode (where it starts for all new accounts) you will also need to verify addresses before sending mail to them. You can request that SES be transitioned into production mode at any time.
-* Create a bucket in S3 for audit data. This bucket will be used to store audit logs. Using the default bucket settings will be fine. Capture the bucket name for use in following steps.
+* Create a bucket in S3 for audit data. This bucket will be used to store audit logs. The name of the bucket must conform to the DuraCloud bucket naming scheme, meaning it must have a 20-character prefix, followed by a ".", followed by the space name. The space name will be what DuraCloud displays to you in the UI once everything is up and running. For example `duracloudtestingspot.auditlogs`. Using the default bucket settings will be fine. Capture the bucket name for use in following steps.
 * Create a queue for audit data in the SQS service. The queue type should be Standard. This queue will be used to capture audit information as changes are made in DuraCloud. Capture the queue name for use in following steps.
 * Create a topic in the SNS service. This topic will be used to send notifications from the Management Console to DuraCloud when users or accounts change. Capture the topic ARN for use in following steps.
 
@@ -96,10 +96,7 @@ During application startup, the AWS client built into the DuraCloud applications
 [default]
 region = preferred_aws_region
 ```
-If you are not using the AWS CLI tools, you can still create a .aws/config file for this purpose. Alternatively, you can define the region by adding another variable to your `setenv.sh`:
-```
-JAVA_OPTS="${JAVA_OPTS} -DAWS_REGION=<preferred aws region>"
-```
+If you are not using the AWS CLI tools, you can still create a .aws/config file for this purpose. Alternatively, you can define the region by adding "AWS_REGION" a system environment variable, with a value indicating your preferred region (such as 'us-east-1').
 
 ### Configure Tomcat
 *Configure Tomcat to allow for deployment of the DuraCloud web applications from your Maven build*
@@ -161,7 +158,7 @@ UPDATE duracloud_accounts.duracloud_user SET root=true WHERE username='your-user
 2. Back in the browser, login to the Management Console. In the upper right corner, select *Root Console*.
 3. Select the *DuraCloud Mill* tab, then *Edit Configuration*. AWS configuration values you created in the AWS Account section at the top of this document will be needed here.
    1. Enter the Mill database information. The database name is `duracloud_mill`. The database port is 3306. The database username is `millreader`. Also enter the Audit queue name and space ID.
-   2. Enter the audit queue name in the *Audit Queue* field and the S3 audit bucket name in the *Audit Log Space Id* field.
+   2. Enter the audit queue name in the *Audit Queue* field and the S3 audit space name (the part after the "." in the audit bucket name) into the *Audit Log Space Id* field.
    3. Select *OK*.
 4. Select the Global Properties tab, then *Edit Configuration*.
    1. Enter the SNS topic ARN you created in the AWS account section above
