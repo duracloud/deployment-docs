@@ -26,6 +26,8 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
     * environment params:
        * key: S3_CONFIG_BUCKET
        * value: ```<your-s3-config-bucket>```
+       * key: AWS_REGION
+       * value: ```<your-aws-region>```
 
 ## Autoscaling
 1. Set min/max instance counts based on your system needs.
