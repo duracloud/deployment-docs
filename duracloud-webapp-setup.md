@@ -16,16 +16,18 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
    basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
    1. Note: Enhanced health reporting in Beanstalk cannot be used with DuraCloud as it will report failures on HTTP 
    responses which have a 404 response code. This response code is perfectly valid for a REST API when an item that is requested does not exist. The DuraCloud SyncTool makes frequent use of requests to check for the existence of files prior to uploads, which often result in 404 responses. Using Enhanced health reporting with Beanstalk will result in functional DuraCloud instances being taken out of service.
-7. Select the IAM instance role you set up previously for the duracloud instance (`uracloud-instance`).
+7. Select the IAM instance role you set up previously for the duracloud instance (`duracloud-instance`).
 8. Launch the environment.
 
 ## Environment Variables
-1. Navigate to environment -> configuration -> software configuration
+1. Navigate to environment -> configuration -> software (modify)
     * jvm command line params:
       ```-Dduracloud.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
     * environment params:
        * key: S3_CONFIG_BUCKET
        * value: ```<your-s3-config-bucket>```
+       * key: AWS_REGION
+       * value: ```<your-aws-region>``` ([make sure to use a valid EC2 region code](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions))
 
 ## Autoscaling
 1. Set min/max instance counts based on your system needs.
