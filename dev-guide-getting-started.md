@@ -98,6 +98,15 @@ region = preferred_aws_region
 ```
 If you are not using the AWS CLI tools, you can still create a .aws/config file for this purpose. Alternatively, you can define the region by adding "AWS_REGION" a system environment variable, with a value indicating your preferred region (such as 'us-east-1').
 
+### Configure logging level
+By default, the logging level for DuraStore and DurAdmin is set to WARN. If you would like more detailed logging (such as INFO or DEBUG), add another line to the `setenv.sh` file created in the previous section as follows:
+```
+JAVA_OPTS="${JAVA_OPTS} -Dlog.level=DEBUG"
+```
+Replace `DEBUG` with the log level that you would prefer.
+
+By default. the logging level for the SyncTool and RetrievalTool are set to INFO. The same system property is used to set these to a different value. The easiest way to change the log level for these tools is to include `-Dlog.level=DEBUG` (using your preferred level) when executing the tool on the command line.
+
 ### Configure Tomcat
 *Configure Tomcat to allow for deployment of the DuraCloud web applications from your Maven build*
 
