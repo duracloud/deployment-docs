@@ -1,9 +1,10 @@
-This document still needs to be written. When that happens, it is likely to include the following:
+LYRASIS uses SumoLogic to aggregate DuraCloud logs in order to better understand what is happening in the DuraCloud system. The following is an overview of the types of charts developed for monitoring DuraCloud systems, as an example of use.
 
-* A description of what information is contained in DuraCloud logs
-* How SumoLogic can be configured to capture and parse DuraCloud logs
-* How to set up SumoLogic dashboards for DuraCloud data
-* Details about the information available in SumoLogic searches and dashboards
+Details to be added:
+
+* An overview of the information contained in DuraCloud logs
+* Configuring SumoLogic to capture and parse DuraCloud logs
+* Creating SumoLogic dashboards for DuraCloud data
 
 # A Tour of the SumoLogic Graphs
 
