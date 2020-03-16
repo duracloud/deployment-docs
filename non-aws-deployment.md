@@ -19,7 +19,7 @@ SMTP can be used in place of AWS SES for sending emails. Setting up an SMTP serv
 
 To start using SMTP to send emails, add the following to the `.properties` files used to configure each DuraCloud application:
 ```
-notification.type=smtp
+emailer.type=smtp
 notification.host=your.smtp.server.com
 notification.port=25 # Defaults to 25 if not specified
 ```
