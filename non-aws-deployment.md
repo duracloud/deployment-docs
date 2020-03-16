@@ -34,7 +34,7 @@ RabbitMQ can be used in place of SQS to provide system queues. This was develope
 
 ### Replacing SQS
 1. In RabbitMQ, create an Exchange of type `direct`
-1. In RabbitMQ server, create the following queues (the actual names are arbitrary, but make sure they are unique):
+2. In RabbitMQ server, create the following queues (the actual names are arbitrary, but make sure they are unique):
   * audit
   * bit-integrity
   * dup-high-priority
@@ -42,8 +42,8 @@ RabbitMQ can be used in place of SQS to provide system queues. This was develope
   * bit-report
   * dead-letter
   * storagestats
-1. Bind all queues created in step 2 to the exchange created in step 1, use the queue names as the routing key
-1. In Management Console > root console > Duracloud MiIl:
+3. Bind all queues created in step 2 to the exchange created in step 1, use the queue names as the routing key
+4. In Management Console > root console > Duracloud MiIl:
   * Change Queue Type to RabbitMQ
   * Input all the config, including the direct exchange name created in step 1 and audit queue name created in step 2.
   * Save settings and restart Tomcat
@@ -53,7 +53,7 @@ RabbitMQ can be used in place of SNS to provide system notifications. SNS functi
 
 ### Replacing SNS
 1. In RabbitMQ server, create an Exchange (type `fanout`)
-1. In Management Console > root console > Global Properties:
+2. In Management Console > root console > Global Properties:
   * Change Queue Type to “RabbitMQ”
   * Input all the config, including the fanout exchange name created in step 1
   * Save settings and restart Tomcat
@@ -77,10 +77,10 @@ OpenStack Swift can be used as a DuraCloud Storage Provider, regardless of wheth
 To use Swift as a DuraCloud Storage provider, you must:
 * be running OpenStack Swift Train or newer
 * install the S3 middleware API
-* create EC2 credentials for the domain/project where you want to store audit logs/duplication policies
+* create EC2 credentials for the domain/project where you want to create Swift containers to serve as DuraCloud spaces
 
 ### Swift for System Storage
-OpenStack Swift can also be used in place of Amazon S3 for background DuraCloud system storage.
+OpenStack Swift can also be used in place of Amazon S3 for background DuraCloud system storage (i.e. duplication policies and audit logs).
 
 To use Swift as a storage backend for duplication policies and audit logs, you must have OpenStack configured such that it can be used as a DuraCloud Storage Provider (see list above). You must also include the following fields in your `.properties` files for both DuraStore/DurAdmin and the Mill.
 ```
