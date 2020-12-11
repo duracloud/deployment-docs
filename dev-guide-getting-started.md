@@ -18,9 +18,9 @@ Once you  have an AWS account, you will need to:
 
 Install the following software:
 
-1. [Java (version 8+)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) - The Oracle JDK is recommended for building DuraCloud, as this JDK is used for release testing
+1. [Java (version 11+)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) - OpenJDK is recommended for building DuraCloud, as this JDK is used for release testing
 2. [Maven (version 3.x)](https://maven.apache.org/download.cgi)
-3. [Tomcat (version 8.x)](https://tomcat.apache.org/download-80.cgi)
+3. [Tomcat (version 8.5+)](https://tomcat.apache.org/download-80.cgi) : we have tested on 8.5 and 9.x
 4. [Git (latest version)](https://git-scm.com/downloads)
 
 Once each of these is installed, open up your console and verify that each is available on your path. *Tip: On Windows, consider using git-bash as your console, it's far more useful than the standard Windows command prompt*

@@ -6,9 +6,9 @@ Thanks to the team at the University of Toronto for their development contributi
 
 ## Versions
 Ensure that you are running at least the following versions of DuraCloud software:
-* DuraCloud version 6.2.0+
-* DuraCloud Management Console version 6.0.0+
-* DuraCloud Mill 3.2.0+
+* DuraCloud version 6.3.0+
+* DuraCloud Management Console version 6.1.0+
+* DuraCloud Mill 3.3.0+
 
 If you are upgrading from a previous version of DuraCloud, ensure that you have run the schema update script `resources/sql/update-non-aws.sql` in the Management Console Baseline. This will add required columns to the `duracloud_mill` and `global_properties` tables in the accounts database. The exact command will vary depending on your MySQL installation.
 ```
