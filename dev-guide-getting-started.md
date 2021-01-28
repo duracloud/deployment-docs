@@ -1,6 +1,6 @@
 # Development Guide: Getting Started
 
-The purpose of this guide is to walk you through the steps required to set up your local environment for working on the DuraCloud software. 
+The purpose of this guide is to walk you through the steps required to set up your local environment for working on the DuraCloud software.
 
 After you have completed these steps, you should have an operational DuraCloud deployment running on your local machine.
 
@@ -18,7 +18,7 @@ Once you  have an AWS account, you will need to:
 
 Install the following software:
 
-1. [Java (version 11+)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) - OpenJDK is recommended for building DuraCloud, as this JDK is used for release testing
+1. [Java (version 11+)](https://jdk.java.net/java-se-ri/11) - OpenJDK is recommended for building DuraCloud, as this JDK is used for release testing
 2. [Maven (version 3.x)](https://maven.apache.org/download.cgi)
 3. [Tomcat (version 8.5+)](https://tomcat.apache.org/download-80.cgi) : we have tested on 8.5 and 9.x
 4. [Git (latest version)](https://git-scm.com/downloads)
@@ -30,11 +30,11 @@ Once each of these is installed, open up your console and verify that each is av
 * For Maven: `mvn -version`
 * For Tomcat: `version.sh`
 
-If any of these fail to come back with a version value (usually saying something like "command not found"), you will need to add that program to your system PATH. How to update the PATH depends on your operating system, but [this may help](https://www.java.com/en/download/help/path.xml). In each application, you'll need to add the *bin* directory under the installation directory to the PATH.
+If any of these fail to come back with a version value (usually saying something like "command not found"), you will need to add that program to your system PATH. How to update the PATH depends on your operating system, but [this may help](https://www.java.com/en/download/help/path.html). In each application, you'll need to add the *bin* directory under the installation directory to the PATH.
 
 Add a system environment variable named **JAVA_HOME** with the path to your Java JDK (the top level directory, not the /bin directory). This environment variable allows Tomcat and Maven to find Java.
 
-(Optional) Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html) to be able to interact with AWS services via the command line.
+(Optional) Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) to be able to interact with AWS services via the command line.
 
 ## Database
 
@@ -73,7 +73,7 @@ mc.domain=duracloud.org
 # Connection details for AWS, to allow email notifications
 notification.user=<aws iam access key id>
 notification.pass=<aws iam secret key>
-notification.from-address=<notification sender email address> 
+notification.from-address=<notification sender email address>
 notification.admin-address=<duracloud admin email address>
 workDirectoryPath=/tmp/duracloud
 ```
@@ -124,8 +124,8 @@ Replace the username and password values with new values (you'll need to make th
 
 Edit /conf/server.xml under your Tomcat installation, add the config attribute "URIEncoding" with value "UTF-8" to your Tomcat Connector for port 8080.  Your connector should look like this when complete:
 ```
-<Connector port="8080" protocol="HTTP/1.1" 
-               connectionTimeout="20000" 
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
                redirectPort="8443"
                URIEncoding="UTF-8" />
 ```
@@ -162,7 +162,7 @@ This will deploy the Management Console application into your local Tomcat
 2. Select the *Create New Profile* link, fill out the form and click *Create Profile*. This will create the user account you will use to administer DuraCloud.
 3. Connect to your MySQL database and execute the following script (make sure to first replace 'your-username-here' with your username). This will update your user to have root level access.
 ```
-UPDATE duracloud_accounts.duracloud_user SET root=true WHERE username='your-username-here'; 
+UPDATE duracloud_accounts.duracloud_user SET root=true WHERE username='your-username-here';
 ```
 2. Back in the browser, login to the Management Console. In the upper right corner, select *Root Console*.
 3. Select the *DuraCloud Mill* tab, then *Edit Configuration*. AWS configuration values you created in the AWS Account section at the top of this document will be needed here.
