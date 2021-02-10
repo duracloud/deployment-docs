@@ -29,7 +29,15 @@ Commit snapshot version update (Git)
 ## Verify automated deployment
 * Ensure tag build in Travis-CI completes successfully (~25 minutes): https://travis-ci.org/duracloud/duracloud/builds
 * Ensure new version is available in maven central: https://search.maven.org/#search%7Cga%7C1%7Corg.duracloud
+  * If deployment to Sonatype was not completed properly by the Travis CI build, it can be executed locally.
+  * Check out the release tag commit, then run: `mvn deploy -DreleaseBuild -DskipTests -DskipDeploy`
 * Ensure new version is created on github releases (with all the expected artifacts): https://github.com/duracloud/duracloud/releases
+  * If release artifacts aren't sent to the github release by the Travis CI build, you can build them locally and upload to github.
+  * Check out the release tag commit, then run: `mvn clean install -DskipTests -Pinstallers`
+  * Collect the release artifacts and upload to the github release
+    * The contents of the top level /target directory will contain the files you will need to create the beanstalk ZIP.
+    * The SyncTool installers (windows-installer.exe, osx-installer.zip, installer jar) will be under synctoolui/target.
+    * The Retrieval Tool JAR will be under retrievaltool/target
 
 ## Deploy to Production
 * Download the duracloud-beanstalk-vX.X.X-*.zip from github releases
