@@ -36,7 +36,7 @@
     ```
 5. Create database schema   
     ```
-    mysql -u root -h your.mysql.host duracloud_accounts < management-console/resources/sql/schema-3.1.6.sql
+    mysql -u root -h your.mysql.host duracloud_accounts < management-console/resources/sql/schema-6.0.0.sql
     ```
 ## Create mill database
 1. Clone the duracloud mill repository:  
