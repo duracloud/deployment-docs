@@ -66,9 +66,13 @@
 2. Grant rights to the users using these commands (**be sure to change the passwords in the script first**):
 
    ```
-    grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' identified by 'accountsadminpassword';
-    grant select on duracloud_accounts.* to 'accountsreader'@'%' identified by 'accountsreaderpassword';
-    grant all privileges on duracloud_mill.* to 'milladmin'@'%' identified by 'milladminpassword';
-    grant select on duracloud_mill.* to 'millreader'@'%' identified by 'millreaderpassword';
+    create user 'accountsadmin'@'%' identified by 'accountsadminpassword';
+    grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' ;
+    create user 'accountsreader'@'%' identified by 'accountsreaderpassword';
+    grant select on duracloud_accounts.* to 'accountsreader'@'%';
+    create user 'milladmin'@'%' identified by 'milladminpassword';
+    grant all privileges on duracloud_mill.* to 'milladmin'@'%';
+    create user 'millreader'@'%' identified by 'millreaderpassword';
+    grant select on duracloud_mill.* to 'millreader'@'%';
     flush privileges;
    ```
