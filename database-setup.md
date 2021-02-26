@@ -13,7 +13,7 @@
 
 ## Install MySQL client tools
 
-1. Determine if you would prefer to interact with MySQL via the command line or via a locally installed GUI client. All of the tasks listed in the following sections can be accomplished via the GUI client or the command line. They are shown here as command line calls for simplicity. 
+1. Determine if you would prefer to interact with MySQL via the command line or via a locally installed GUI client. All of the tasks listed in the following sections can be accomplished via the GUI client or the command line. They are shown here as command line calls for simplicity.
    1. If you prefer command line interaction, [download the MySQL community server](https://dev.mysql.com/downloads/mysql/) which matches your deployed MySQL version. You will not need to run the server itself, but you will need the client tools which are included in the server download.
       1. After download, extract the files in the download package
       2. Add the /bin directory under the extracted mysql directory to your system PATH
@@ -24,7 +24,7 @@
 
 1. Clone the duracloud management console repository:
     ```git clone https://github.com/duracloud/management-console.git```
-2. Checkout the latest tag via git. 
+2. Checkout the latest tag via git.
 3. Connect to MySQL
     ```
     mysql -u <root-username> -h <your mysql host>
@@ -56,23 +56,21 @@
     mysql -u root -h your.mysql.host duracloud_mill < mill/resources/mill-schema-2.5.2.sql
     ```
 ## Create database users and grant privileges  
-1. Create 4 users in your database:
-
+Create 4 users in your database and grant them the necessary access (**be sure to change the passwords**):
 * accountsadmin - this user will have administrative rights to the accounts database
 * accountsreader - this user will have read-only access to the accounts database
 * milladmin - this user will have administrative rights to the mill database
 * millreader - this user will have read-only access to the mill database
 
-2. Grant rights to the users using these commands (**be sure to change the passwords in the script first**):
+```
+create user 'accountsadmin'@'%' identified by 'accountsadminpassword';
+create user 'accountsreader'@'%' identified by 'accountsreaderpassword';
+create user 'milladmin'@'%' identified by 'milladminpassword';
+create user 'millreader'@'%' identified by 'millreaderpassword';
 
-   ```
-    create user 'accountsadmin'@'%' identified by 'accountsadminpassword';
-    grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' ;
-    create user 'accountsreader'@'%' identified by 'accountsreaderpassword';
-    grant select on duracloud_accounts.* to 'accountsreader'@'%';
-    create user 'milladmin'@'%' identified by 'milladminpassword';
-    grant all privileges on duracloud_mill.* to 'milladmin'@'%';
-    create user 'millreader'@'%' identified by 'millreaderpassword';
-    grant select on duracloud_mill.* to 'millreader'@'%';
-    flush privileges;
-   ```
+grant all privileges on duracloud_accounts.* to 'accountsadmin'@'%' ;
+grant select on duracloud_accounts.* to 'accountsreader'@'%';
+grant all privileges on duracloud_mill.* to 'milladmin'@'%';
+grant select on duracloud_mill.* to 'millreader'@'%';
+flush privileges;
+```
