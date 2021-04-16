@@ -5,44 +5,49 @@ proceeding.
 
 ## Deploy to Beanstalk
 ### Create Beanstalk Environment
-0. Go to Beanstalk Service
-0. Create application
-0. Give it a name and description (e.g. Management Console)
-0. Click create web server
-0. Select "tomcat" platform and "load balancing" environment
-0. Click through defaults until you reach the configuration details and select m3.large instance, your keypair, basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
-0. Select the IAM instance role you set up previously (ie `management-console`).
-0. Launch the environment.
-
-### Configure Environment Variables
-0. Navigate to environment -> configuration -> software configuration
-  * jvm command line params:
-    ```-Dduracloud.home=/tmp/duracloud-home -Dmc.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
-  * environment params:
+0. Go to the Beanstalk Service in the AWS console
+0. Select `Create New Application`
+0. Give it a name and description (e.g. DuraCloud Management Console)
+0. Click `Create web server`
+0. Select `Tomcat` platform, `Tomcat 8.5 with Corretto 11 running on 64bit Amazon Linux 2` platform branch and `4.1.7` version
+0. Select the `Sample application` (it will be replaced by DuraCloud apps in a later step), and keep the default deployment preferences
+0. Take defaults for environment name and URL (or update them if you'd prefer.) The environment URL must be unique.
+0. Leave additional resources unchecked
+0. Click on `Configure more options`
+0. Under `Presets` click high availability
+0. Edit `VPC` section and select your VPC and subnets and click save
+0. Edit `Load Balancer` select application load balancer. Add a listener with https, port 443 and your *.<domain> certificate. Edit the default process and change the health check path to `/login`
+0. Edit `Manage Updates` disable managed updates.
+0. Click "Edit" in the `Software` section and select Apache under Container Options and enter the following Environmental Variables:
      * key: S3_CONFIG_BUCKET
-     * value: ```<your-s3-config-bucket>```
-
-### Configure Autoscaling
-0. Set min/max instance counts to 2 and 3 respectively.
-0. Under scaling trigger section:
-  * Trigger measurement: CPU Utilization
-  * Trigger statistic: average
-  * Unit of measurement: percent
-  * Measurement period: 1
-  * Breach duration: 1
-  * Upper threshold: 80
-  * Upper breach scale: 1
-  * Lower threshold: 20
-  * Lower breach scale: -1
-
-### Configure Load Balancer
-0. Secure listener port: 443
-0. Navigate to "Load Balancing"
-0. Select SSL Certificate
-0. Select session stickiness
-0. Click `Apply`
-0. Navigate to EC2 -> load balancers
-0. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
+          * value: ```<your-s3-config-bucket>```
+          * key: AWS_REGION
+          * value: ```<your-aws-region>``` ([make sure to use a valid EC2 region code](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions))
+0. Edit `Capacity`
+    0. select `Load balanced` Environment type 
+    0. `min` instances to `2`
+    0. `max` instances to`5`
+    0. `m5.large` instance type 
+    0. `scaling cooldown` to `360`.
+    0. Scaling Triggers:
+        * `Metric`: `CPUUtilization`
+        * `Statistic`: `Average`
+        * `Unit`: `Percent`
+        * `Period`: `1`
+        * `Breach Duration`: `5`
+        * `Upper threshold`: `70`
+        * `Scale up Increment`: `1`
+        * `Lower threshold`: `20`
+        * `Scale-down increment`: `-1`
+0. Edit`Notifications`, enter an email address
+0. Edit `Security`, set your keypair and IAM instance profile
+0. Edit `Monitoring`
+    * Enable `Ignore application 4xx`
+    * Enable `Ignore load balancer 4xx`
+0. Click `Create Environment`
+0. Navigate to `Configuration -> Software` and set the followiwng:
+    * jvm command line params:
+      ```-Dduracloud.home=/tmp/duracloud-home -Dmc.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).
 
