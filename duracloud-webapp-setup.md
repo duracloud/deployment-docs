@@ -4,51 +4,49 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
 
 ## Create Environment
 
-1. Go to the Beanstalk Service in the AWS console
-2. Select `Create New Application`
-3. Give it a name and description (e.g. DuraCloud)
-4. Click `Create web server`
-5. Select `Tomcat` platform and `Load balancing, auto scaling` environment
-6. Select the `Sample application` (it will be replaced by DuraCloud apps in a later step), and keep the default deployment preferences
-7. Take defaults for environment name and URL (or update them if you'd prefer.) The environment URL must be unique.
-8. Leave additional resources unchecked
-9. In configuration details, select an m3.large instance type, your keypair, 
-   basic health reporting, and root volume device of 30 GiB with General Purpose SSD.
-   1. Note: Enhanced health reporting in Beanstalk cannot be used with DuraCloud as it will report failures on HTTP 
-   responses which have a 404 response code. This response code is perfectly valid for a REST API when an item that is requested does not exist. The DuraCloud SyncTool makes frequent use of requests to check for the existence of files prior to uploads, which often result in 404 responses. Using Enhanced health reporting with Beanstalk will result in functional DuraCloud instances being taken out of service.
-7. Select the IAM instance role you set up previously for the duracloud instance (`duracloud-instance`).
-8. Launch the environment.
-
-## Environment Variables
-1. Navigate to environment -> configuration -> software (modify)
+0. Go to the Beanstalk Service in the AWS console
+0. Select `Create New Application`
+0. Give it a name and description (e.g. DuraCloud)
+0. Click `Create web server`
+0. Select `Tomcat` platform, `Tomcat 8.5 with Corretto 11 running on 64bit Amazon Linux 2` platform branch and `4.1.7` version
+0. Select the `Sample application` (it will be replaced by DuraCloud apps in a later step), and keep the default deployment preferences
+0. Take defaults for environment name and URL (or update them if you'd prefer.) The environment URL must be unique.
+0. Leave additional resources unchecked
+0. Click on `Configure more options`
+0. Under `Presets` click high availability
+0. Edit `VPC` section and select your VPC and subnets and click save
+0. Edit `Load Balancer` select application load balancer. Add a listener with https, port 443 and your *.<domain> certificate. Edit the default process and change the health check path to /duradmin/login
+0. Edit `Manage Updates` disable managed updates.
+0. Click "Edit" in the `Software` section and select Apache under Container Options and enter the following Environmental Variables:
+     * key: S3_CONFIG_BUCKET
+          * value: ```<your-s3-config-bucket>```
+          * key: AWS_REGION
+          * value: ```<your-aws-region>``` ([make sure to use a valid EC2 region code](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions))
+0. Edit `Capacity`
+    0. select `Load balanced` Environment type 
+    0. `min` instances to `2`
+    0. `max` instances to`5`
+    0. `m5.large` instance type 
+    0. `scaling cooldown` to `360`.
+    0. Scaling Triggers:
+        * `Metric`: `CPUUtilization`
+        * `Statistic`: `Average`
+        * `Unit`: `Percent`
+        * `Period`: `1`
+        * `Breach Duration`: `5`
+        * `Upper threshold`: `70`
+        * `Scale up Increment`: `1`
+        * `Lower threshold`: `20`
+        * `Scale-down increment`: `-1`
+0. Edit`Notifications`, enter an email address
+0. Edit `Security`, set your keypair and IAM instance profile
+0. Edit `Monitoring`
+    * Enable `Ignore application 4xx`
+    * Enable `Ignore load balancer 4xx`
+0. Click `Create Environment`
+0. Navigate to `Configuration -> Software` and set the followiwng:
     * jvm command line params:
       ```-Dduracloud.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
-    * environment params:
-       * key: S3_CONFIG_BUCKET
-       * value: ```<your-s3-config-bucket>```
-       * key: AWS_REGION
-       * value: ```<your-aws-region>``` ([make sure to use a valid EC2 region code](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions))
-
-## Autoscaling
-1. Set min/max instance counts based on your system needs.
-   1. An initial minimum of 3 and maximum of 7 should be sufficient. When consistent load is higher you may choose to increase these numbers.
-2. Under scaling trigger section:
-  * Trigger measurement: CPU Utilization
-  * Trigger statistic: average
-  * Unit of measurement: percent
-  * Measurement period: 1
-  * Breach duration: 1
-  * Upper threshold: 80
-  * Upper breach scale: 1
-  * Lower threshold: 20
-  * Lower breach scale: -1
-
-## Load Balancer
-1. Navigate to "Load Balancing"
-2. Select session stickiness
-3. Navigate to EC2 -> load balancers
-4. Under port configuration enable "load balancer generated cookie stickiness" for ports 80 and 443.
-5. Under Attributes change the "Idle timeout" property to 180 seconds.
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).
 
