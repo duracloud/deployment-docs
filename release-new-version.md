@@ -25,11 +25,15 @@ Set snapshot version
 Commit snapshot version update (Git)
 * Commit version update with commit message: Updates version to X.X.X-SNAPSHOT for continued development
 * Push changes to github
+  ```
+    git push upstream develop --tags
+    git push upstream main  
+  ```
 
 ## Verify automated deployment
-* Ensure tag build in Travis-CI completes successfully (~25 minutes): https://travis-ci.org/duracloud/duracloud/builds
+* Ensure main build in Git Actions CI completes successfully (~25 minutes): https://github.com/duracloud/duracloud/actions
 * Ensure new version is available in maven central: https://search.maven.org/#search%7Cga%7C1%7Corg.duracloud
-  * If deployment to Sonatype was not completed properly by the Travis CI build, it can be executed locally.
+  * If deployment to Sonatype was not completed properly by the CI build, it can be executed locally.
   * Check out the release tag commit, then run: `mvn deploy -DreleaseBuild -DskipTests -DskipDeploy`
 * Ensure new version is created on github releases (with all the expected artifacts): https://github.com/duracloud/duracloud/releases
   * If release artifacts aren't sent to the github release by the Travis CI build, you can build them locally and upload to github.

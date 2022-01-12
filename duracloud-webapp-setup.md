@@ -8,7 +8,7 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
 0. Select `Create New Application`
 0. Give it a name and description (e.g. DuraCloud)
 0. Click `Create web server`
-0. Select `Tomcat` platform, `Tomcat 8.5 with Corretto 11 running on 64bit Amazon Linux 2` platform branch and `4.1.7` version
+0. Select `Tomcat` platform, `Tomcat 8.5 with Corretto 11 running on 64bit Amazon Linux 2` platform branch and `4.2.10` version
 0. Select the `Sample application` (it will be replaced by DuraCloud apps in a later step), and keep the default deployment preferences
 0. Take defaults for environment name and URL (or update them if you'd prefer.) The environment URL must be unique.
 0. Leave additional resources unchecked
@@ -47,6 +47,17 @@ The DuraCloud web applications are run using AWS Elastic Beanstalk. This service
 0. Navigate to `Configuration -> Software` and set the followiwng:
     * jvm command line params:
       ```-Dduracloud.config.file=s3://<your-s3-config-bucket>/path-to-duracloud-properties-file```
+
+## Load Balancer Stickiness config (EC2)
+
+There are a couple of additional configurations you'll need to make in EC2 -> Load Balancer section in order to support sticky sessions with an Application Load Balancer.
+
+0. Click on your DuraCloud autoscaling group
+0. Scroll down to `Load Balancing` and click on the target group.
+0. Click on the `Attributes` tab and hit `Edit`
+0. Select `Application-based cookie` under `Stickiness type`
+0. Set the `App cookie name` to `JSESSIONID`
+0. Save changes.
 
 You are now ready to deploy the DuraCloud beanstalk zip. You can do so by following the instruction in "Deploy to Production" detailed in [this document](release-new-version.md).
 
