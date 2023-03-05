@@ -191,6 +191,11 @@ VPC is used for the deployment of DuraCloud Mill instances.
    mc.port=443
    mc.context=
    mc.domain=<your management console domain>
+   
+   # Recaptcha
+   recaptcha.enabled=true
+   recaptcha.siteKey=<your recaptcha site key>
+   recaptcha.secret=<your recaptcha secret>
 
    # DuraCloud versions >= 4.4.3 allow for leaving out the notification credentials
    notification.user=<aws access key>
